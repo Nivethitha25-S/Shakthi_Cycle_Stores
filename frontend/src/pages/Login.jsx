@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { authApi } from '../services/api';
-import logoImg from '../assets/logo.png';
 
-function Login({ onLoginSuccess, onBackToLanding }) {
+function Login({ onLoginSuccess }) {
   const [username, setUsername] = useState('Nivetha');
   const [password, setPassword] = useState('Nive@1234');
   const [loading, setLoading] = useState(false);
@@ -33,32 +32,17 @@ function Login({ onLoginSuccess, onBackToLanding }) {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-dark py-5 px-3 position-relative" style={{ backgroundColor: '#0f172a' }}>
-      {onBackToLanding && (
-        <button
-          type="button"
-          className="btn btn-outline-light position-absolute top-0 start-0 m-4 d-flex align-items-center gap-2 rounded-pill px-3 shadow-sm"
-          onClick={onBackToLanding}
-        >
-          <i className="bi bi-arrow-left"></i>
-          <span>Back to Store Website</span>
-        </button>
-      )}
-
+    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-dark py-5 px-3">
       <div className="card border-0 shadow-lg rounded-4 overflow-hidden" style={{ maxWidth: '440px', width: '100%' }}>
-        <div className="bg-primary text-white text-center py-4 px-4 position-relative" style={{ background: 'linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%)' }}>
+        <div className="bg-primary text-white text-center py-4 px-4 position-relative">
           <div
-            className="d-inline-flex align-items-center justify-content-center bg-white rounded-circle shadow p-2 mb-3"
-            style={{ width: '80px', height: '80px' }}
+            className="d-inline-flex align-items-center justify-content-center bg-white text-primary rounded-circle shadow-sm mb-3"
+            style={{ width: '70px', height: '70px' }}
           >
-            <img
-              src={logoImg}
-              alt="Shakthi Cycle Stores"
-              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-            />
+            <i className="bi bi-bicycle fs-1"></i>
           </div>
-          <h4 className="fw-bold mb-1 tracking-wide text-white">Shakthi Cycle Stores</h4>
-          <p className="small text-white-50 mb-0 fw-medium">CYCLE SHOP & AUTO ACCESSORIES</p>
+          <h4 className="fw-bold mb-1 tracking-wide">Shakthi Cycle Stores</h4>
+          <p className="small text-white-50 mb-0">& Autos Management System</p>
         </div>
 
         <div className="card-body p-4 p-sm-5 bg-white">

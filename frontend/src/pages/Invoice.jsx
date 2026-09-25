@@ -1,5 +1,4 @@
 import React from 'react';
-import logoImg from '../assets/logo.png';
 
 function Invoice({ sale, onNavigate, onNewSale }) {
   if (!sale) {
@@ -85,18 +84,15 @@ function Invoice({ sale, onNavigate, onNewSale }) {
           <div className="row align-items-center">
             <div className="col-12 col-md-7">
               <div className="d-flex align-items-center gap-3 mb-2">
-                <img
-                  src={logoImg}
-                  alt="Shakthi Cycle Stores"
-                  height="55"
-                  className="rounded bg-white p-1 shadow-sm"
-                />
+                <span className="badge bg-danger p-2 rounded-circle">
+                  <i className="bi bi-bicycle fs-4"></i>
+                </span>
                 <h3 className="fw-bold mb-0 text-white tracking-wide">
-                  Shakthi Cycle Stores
+                  Shakthi Cycle Stores And Autos
                 </h3>
               </div>
               <p className="text-white-50 small mb-1">
-                CYCLE SHOP & AUTO ACCESSORIES - Genuine Spares, Tyres & Complete Servicing
+                Authorized Dealer in Premium Bicycles, Genuine Spares, Tyres & Complete Accessories
               </p>
               <small className="text-secondary">
                 Main Road, Market Hub &bull; GSTIN: 33AAAAA0000A1Z5 &bull; Ph: +91 98765 43210

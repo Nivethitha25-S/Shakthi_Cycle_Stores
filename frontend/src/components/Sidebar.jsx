@@ -1,4 +1,5 @@
 import React from 'react';
+import logoImg from '../assets/logo.png';
 
 function Sidebar({ activePage, onNavigate, onLogout, isMobileOpen, onCloseMobile }) {
   const menuItems = [
@@ -37,12 +38,28 @@ function Sidebar({ activePage, onNavigate, onLogout, isMobileOpen, onCloseMobile
           minWidth: '260px',
           minHeight: 'calc(100vh - 60px)',
           transition: 'all 0.3s ease-in-out',
-          zIndex: 1045
+          zIndex: 1045,
+          backgroundColor: '#0b0f19'
         }}
       >
         <div>
+          {/* Logo Header */}
+          <div className="d-flex align-items-center gap-2 px-2 pb-3 mb-3 border-bottom border-secondary border-opacity-25">
+            <img
+              src={logoImg}
+              alt="Logo"
+              height="42"
+              className="rounded bg-white p-1 shadow-sm"
+              style={{ objectFit: 'contain' }}
+            />
+            <div>
+              <div className="fw-bold text-white fs-6 lh-1">Shakthi Cycles</div>
+              <small className="text-secondary" style={{ fontSize: '0.68rem' }}>& AUTO ACCESSORIES</small>
+            </div>
+          </div>
+
           <div className="text-secondary text-uppercase fw-bold px-3 mb-2" style={{ fontSize: '0.75rem', letterSpacing: '1px' }}>
-            Main Navigation
+            Store Management
           </div>
           <ul className="nav nav-pills flex-column gap-1 mb-auto">
             {menuItems.map((item) => {
@@ -65,19 +82,33 @@ function Sidebar({ activePage, onNavigate, onLogout, isMobileOpen, onCloseMobile
               );
             })}
           </ul>
+
+          <div className="mt-3 pt-2 border-top border-secondary border-opacity-25">
+            <button
+              type="button"
+              className="nav-link w-100 text-start d-flex align-items-center gap-3 py-2 px-3 rounded-3 border-0 text-warning bg-transparent hover-light"
+              onClick={() => handleItemClick('landing')}
+            >
+              <i className="bi bi-globe2 fs-5 text-warning"></i>
+              <span>View Storefront</span>
+            </button>
+          </div>
         </div>
 
-        <div className="pt-4 border-top border-secondary border-opacity-25 mt-3">
-          <div className="p-3 bg-black bg-opacity-25 rounded-3 mb-3 text-center">
-            <small className="text-secondary d-block" style={{ fontSize: '0.75rem' }}>Store Location</small>
-            <strong className="text-light small d-block">Shakthi Cycle Stores</strong>
-            <span className="badge bg-secondary text-white mt-1" style={{ fontSize: '0.65rem' }}>Auto & Spares Hub</span>
+        <div className="pt-3 border-top border-secondary border-opacity-25 mt-3">
+          <div className="p-2 bg-black bg-opacity-40 rounded-3 mb-3 text-center border border-secondary border-opacity-25">
+            <small className="text-secondary d-block" style={{ fontSize: '0.72rem' }}>Store Location</small>
+            <strong className="text-light small d-block">Main Bazaar, City Center</strong>
+            <span className="badge bg-primary bg-opacity-25 text-primary border border-primary border-opacity-50 mt-1" style={{ fontSize: '0.65rem' }}>
+              Cycle & Auto Spares Hub
+            </span>
           </div>
 
           <button
             type="button"
-            className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2 py-2 rounded-3"
+            className="btn btn-outline-danger w-100 d-flex align-items-center justify-content-center gap-2 py-2 rounded-3 shadow-sm"
             onClick={onLogout}
+            title="Sign out and return to landing page"
           >
             <i className="bi bi-box-arrow-right fs-5"></i>
             <span>Sign Out</span>

@@ -1,7 +1,7 @@
 import React from 'react';
 import logoImg from '../assets/logo.png';
 
-export default function LandingPage({ onGoToLogin }) {
+export default function LandingPage({ onGoToLogin, isLoggedIn = false }) {
   const categories = [
     {
       title: 'MTB & Gear Bicycles',
@@ -88,7 +88,7 @@ export default function LandingPage({ onGoToLogin }) {
             <div>
               <span className="fw-bold fs-4 text-dark d-block lh-1">Shakthi Cycle Stores</span>
               <small className="text-muted fw-semibold" style={{ fontSize: '0.78rem', letterSpacing: '0.04em' }}>
-                AND AUTO ACCESSORIES
+                CYCLE SHOP & AUTO ACCESSORIES
               </small>
             </div>
           </a>
@@ -126,7 +126,7 @@ export default function LandingPage({ onGoToLogin }) {
                 className="btn btn-primary rounded-pill px-4 py-2 fw-semibold d-flex align-items-center gap-2 shadow"
                 onClick={onGoToLogin}
               >
-                <i className="bi bi-shield-lock-fill"></i> Admin / Billing Portal
+                <i className="bi bi-shield-lock-fill"></i> {isLoggedIn ? 'Return to Dashboard' : 'Admin / Billing Portal'}
               </button>
             </div>
           </div>
@@ -154,7 +154,7 @@ export default function LandingPage({ onGoToLogin }) {
                   className="btn btn-primary btn-lg rounded-pill px-4 py-3 fw-bold shadow-lg d-flex align-items-center gap-2"
                   onClick={onGoToLogin}
                 >
-                  <i className="bi bi-box-arrow-in-right"></i> Open POS & Store Management
+                  <i className="bi bi-box-arrow-in-right"></i> {isLoggedIn ? 'Open Store Dashboard' : 'Open POS & Store Management'}
                 </button>
                 <a
                   className="btn btn-outline-dark btn-lg rounded-pill px-4 py-3 fw-semibold"

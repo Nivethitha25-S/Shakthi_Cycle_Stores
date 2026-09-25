@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Inventory from './pages/Inventory';
@@ -9,8 +10,6 @@ import NewSale from './pages/NewSale';
 import Invoice from './pages/Invoice';
 import SalesHistory from './pages/SalesHistory';
 import Analytics from './pages/Analytics';
-
-import LandingPage from './pages/LandingPage';
 
 function App() {
   const [user, setUser] = useState(() => {
@@ -44,7 +43,12 @@ function App() {
   };
 
   const handleNavigate = (page) => {
-    setActivePage(page);
+    if (page === 'landing') {
+      // If logged in user clicks to view landing page
+      setActivePage('landing');
+    } else {
+      setActivePage(page);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -67,7 +71,7 @@ function App() {
     setActivePage('sales-history');
   };
 
-  // If not logged in, display the Landing Page or Login page
+  // If user is not logged in: display either the Landing Page or the Login page
   if (!user) {
     if (authView === 'login') {
       return (
@@ -84,11 +88,22 @@ function App() {
     );
   }
 
+  // If logged in user explicitly views the Landing Page
+  if (activePage === 'landing') {
+    return (
+      <LandingPage
+        onGoToLogin={() => setActivePage('dashboard')}
+        isLoggedIn={true}
+      />
+    );
+  }
+
   return (
     <div className="min-vh-100 d-flex flex-column bg-light">
       <Navbar
         user={user}
         onLogout={handleLogout}
+        onViewWebsite={() => setActivePage('landing')}
         onToggleSidebar={() => setIsMobileSidebarOpen(!isMobileSidebarOpen)}
       />
 
