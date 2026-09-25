@@ -1,5 +1,3 @@
-import React from 'react';
-
 function DashboardCard({ title, value, icon, color = 'primary', subtitle, loading = false, onClick }) {
   return (
     <div

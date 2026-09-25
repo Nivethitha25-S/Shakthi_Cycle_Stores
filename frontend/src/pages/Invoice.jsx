@@ -1,5 +1,3 @@
-import React from 'react';
-
 function Invoice({ sale, onNavigate, onNewSale }) {
   if (!sale) {
     return (
@@ -36,6 +34,11 @@ function Invoice({ sale, onNavigate, onNewSale }) {
       timeStyle: 'short'
     });
   };
+
+  const discountPct = Number(sale.discount) || 0;
+  const discountAmount = sale.discountAmount != null
+    ? Number(sale.discountAmount)
+    : ((Number(sale.subtotal) || 0) * discountPct) / 100;
 
   const handlePrint = () => {
     window.print();
@@ -184,8 +187,8 @@ function Invoice({ sale, onNavigate, onNewSale }) {
                 </div>
 
                 <div className="d-flex justify-content-between text-danger mb-2">
-                  <span>Discount Applied:</span>
-                  <span className="fw-semibold">- {formatCurrency(sale.discount || 0)}</span>
+                  <span>Discount ({discountPct}%):</span>
+                  <span className="fw-semibold">- {formatCurrency(discountAmount)}</span>
                 </div>
 
                 <hr className="my-2" />

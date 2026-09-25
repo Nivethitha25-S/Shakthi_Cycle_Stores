@@ -1,0 +1,14 @@
+# Environment / secrets
+backend/.env
+
+# Build artifacts
+backend/target/
+backend/data/
+
+# Editor and AI tooling
+.vscode/
+.claude/
+
+# Logs and OS files
+*.log
+.DS_Store

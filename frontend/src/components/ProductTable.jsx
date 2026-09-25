@@ -1,12 +1,9 @@
-import React from 'react';
-
 function ProductTable({
   products = [],
   loading = false,
   onEdit,
   onDelete,
-  onIntakeStock,
-  onSelectProduct
+  onIntakeStock
 }) {
   const getStatusBadge = (product) => {
     const stock = product.stockQuantity ?? 0;

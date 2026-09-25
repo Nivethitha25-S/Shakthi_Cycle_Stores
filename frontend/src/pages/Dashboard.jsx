@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { dashboardApi } from '../services/api';
 import DashboardCard from '../components/DashboardCard';
 import LowStockAlert from '../components/LowStockAlert';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { productsApi } from '../services/api';
 
 function StockIntake({ selectedProductInitial, onNavigate }) {
@@ -31,6 +31,7 @@ function StockIntake({ selectedProductInitial, onNavigate }) {
 
   useEffect(() => {
     fetchProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedProductInitial]);
 
   const selectedProduct = products.find((p) => String(p.id) === String(selectedProductId));

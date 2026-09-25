@@ -1,6 +1,7 @@
 package com.cycleshop.service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -62,7 +63,7 @@ public class SaleService {
                 throw new BadRequestException("Requested quantity must be greater than zero.");
             }
 
-            Product product = productRepository.findById(itemReq.getProductId())
+            Product product = productRepository.findByIdWithLock(itemReq.getProductId())
                     .orElseThrow(() -> new ResourceNotFoundException("Product not found with id: " + itemReq.getProductId()));
 
             int availableStock = product.getStockQuantity() != null ? product.getStockQuantity() : 0;
@@ -90,18 +91,20 @@ public class SaleService {
             saleItemsToSave.add(saleItem);
         }
 
-        BigDecimal discount = request.getDiscount() != null ? request.getDiscount() : BigDecimal.ZERO;
-        if (discount.compareTo(BigDecimal.ZERO) < 0) {
+        BigDecimal discountPercent = request.getDiscount() != null ? request.getDiscount() : BigDecimal.ZERO;
+        if (discountPercent.compareTo(BigDecimal.ZERO) < 0) {
             throw new BadRequestException("Discount cannot be negative.");
         }
-        if (discount.compareTo(subtotal) > 0) {
-            throw new BadRequestException("Discount (₹" + discount + ") cannot exceed subtotal (₹" + subtotal + ").");
+        if (discountPercent.compareTo(new BigDecimal("100")) > 0) {
+            throw new BadRequestException("Discount cannot exceed 100%.");
         }
 
-        BigDecimal finalTotal = subtotal.subtract(discount);
+        BigDecimal discountAmount = subtotal.multiply(discountPercent)
+                .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
+        BigDecimal finalTotal = subtotal.subtract(discountAmount);
 
         sale.setSubtotal(subtotal);
-        sale.setDiscount(discount);
+        sale.setDiscount(discountPercent);
         sale.setTotalAmount(finalTotal);
 
         for (SaleItem item : saleItemsToSave) {
@@ -153,6 +156,13 @@ public class SaleService {
                 item.getTotalPrice()
         )).collect(Collectors.toList());
 
+        BigDecimal discountPercent = sale.getDiscount() != null ? sale.getDiscount() : BigDecimal.ZERO;
+        BigDecimal discountAmount = BigDecimal.ZERO;
+        if (sale.getSubtotal() != null) {
+            discountAmount = sale.getSubtotal().multiply(discountPercent)
+                    .divide(new BigDecimal("100"), 2, RoundingMode.HALF_UP);
+        }
+
         return new SaleResponse(
                 sale.getId(),
                 sale.getInvoiceNumber(),
@@ -161,6 +171,7 @@ public class SaleService {
                 sale.getSaleDate(),
                 sale.getSubtotal(),
                 sale.getDiscount(),
+                discountAmount,
                 sale.getTotalAmount(),
                 sale.getPaymentMethod(),
                 items

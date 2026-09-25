@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { analyticsApi } from '../services/api';
 
-function Analytics({ onNavigate }) {
+function Analytics() {
   const [period, setPeriod] = useState('monthly');
   const [topProducts, setTopProducts] = useState([]);
   const [loading, setLoading] = useState(true);

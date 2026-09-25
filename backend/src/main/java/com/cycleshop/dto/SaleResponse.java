@@ -13,6 +13,7 @@ public class SaleResponse {
     private LocalDateTime saleDate;
     private BigDecimal subtotal;
     private BigDecimal discount;
+    private BigDecimal discountAmount;
     private BigDecimal totalAmount;
     private String paymentMethod;
     private List<SaleItemResponse> items;
@@ -22,7 +23,8 @@ public class SaleResponse {
 
     public SaleResponse(Long id, String invoiceNumber, String customerName, String customerPhone,
                         LocalDateTime saleDate, BigDecimal subtotal, BigDecimal discount,
-                        BigDecimal totalAmount, String paymentMethod, List<SaleItemResponse> items) {
+                        BigDecimal discountAmount, BigDecimal totalAmount, String paymentMethod,
+                        List<SaleItemResponse> items) {
         this.id = id;
         this.invoiceNumber = invoiceNumber;
         this.customerName = customerName;
@@ -30,6 +32,7 @@ public class SaleResponse {
         this.saleDate = saleDate;
         this.subtotal = subtotal;
         this.discount = discount;
+        this.discountAmount = discountAmount;
         this.totalAmount = totalAmount;
         this.paymentMethod = paymentMethod;
         this.items = items;
@@ -89,6 +92,14 @@ public class SaleResponse {
 
     public void setDiscount(BigDecimal discount) {
         this.discount = discount;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        return discountAmount;
+    }
+
+    public void setDiscountAmount(BigDecimal discountAmount) {
+        this.discountAmount = discountAmount;
     }
 
     public BigDecimal getTotalAmount() {

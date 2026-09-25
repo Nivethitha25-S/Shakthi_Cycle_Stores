@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { salesApi } from '../services/api';
 
 function SalesHistory({ onViewInvoice, onNavigate }) {
@@ -234,7 +234,7 @@ function SalesHistory({ onViewInvoice, onNavigate }) {
                     {formatCurrency(sale.subtotal)}
                   </td>
                   <td className="text-end text-danger fw-medium">
-                    {sale.discount > 0 ? `- ${formatCurrency(sale.discount)}` : '—'}
+                    {sale.discount > 0 ? `- ${sale.discount}%` : '—'}
                   </td>
                   <td className="text-end fw-bold text-dark fs-6">
                     {formatCurrency(sale.totalAmount)}

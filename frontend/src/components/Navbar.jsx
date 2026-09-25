@@ -1,7 +1,6 @@
-import React from 'react';
 import logoImg from '../assets/logo.png';
 
-function Navbar({ user, onLogout, onViewWebsite, onToggleSidebar }) {
+function Navbar({ user, onLogout, onToggleSidebar }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm px-3 py-2" style={{ backgroundColor: '#0f172a' }}>
       <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -35,18 +34,6 @@ function Navbar({ user, onLogout, onViewWebsite, onToggleSidebar }) {
         </div>
 
         <div className="d-flex align-items-center gap-3">
-          {onViewWebsite && (
-            <button
-              className="btn btn-outline-light btn-sm d-none d-md-flex align-items-center gap-2 rounded-pill px-3 py-1"
-              type="button"
-              onClick={onViewWebsite}
-              title="View public storefront landing page"
-            >
-              <i className="bi bi-globe2 text-warning"></i>
-              <span>Storefront</span>
-            </button>
-          )}
-
           <div className="d-none d-md-flex flex-column text-end">
             <span className="text-white fw-semibold small">
               {user?.username || 'Administrator'}

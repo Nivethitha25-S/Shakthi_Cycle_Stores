@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { authApi } from '../services/api';
 
-function Login({ onLoginSuccess }) {
+function Login({ onLoginSuccess, onBackToLanding }) {
   const [username, setUsername] = useState('Nivetha');
-  const [password, setPassword] = useState('Nive@1234');
+  const [password, setPassword] = useState('Nive@25');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -121,6 +121,15 @@ function Login({ onLoginSuccess }) {
           </form>
 
           <div className="mt-4 pt-3 border-top text-center">
+            {onBackToLanding && (
+              <button
+                type="button"
+                className="btn btn-link btn-sm text-primary text-decoration-none mb-2"
+                onClick={onBackToLanding}
+              >
+                <i className="bi bi-arrow-left me-1"></i> Back to Home Page
+              </button>
+            )}
             <small className="text-muted d-block" style={{ fontSize: '0.75rem' }}>
               Shakthi Cycle Stores And Autos &bull; Fast & Reliable Inventory Billing
             </small>

@@ -1,6 +1,7 @@
 package com.cycleshop.dto;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMax;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -18,6 +19,7 @@ public class SaleRequest {
     private String paymentMethod;
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Discount cannot be negative")
+    @DecimalMax(value = "100.0", inclusive = true, message = "Discount cannot exceed 100%")
     private BigDecimal discount = BigDecimal.ZERO;
 
     @NotEmpty(message = "At least one item is required for the sale")

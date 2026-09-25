@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { productsApi, salesApi } from '../services/api';
 
 function NewSale({ onSaleSuccess, onNavigate }) {
@@ -14,7 +14,7 @@ function NewSale({ onSaleSuccess, onNavigate }) {
   const [customerName, setCustomerName] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('CASH');
-  const [discount, setDiscount] = useState(0);
+  const [discountPercent, setDiscountPercent] = useState(0);
 
   // Submission Status
   const [submitting, setSubmitting] = useState(false);
@@ -144,7 +144,8 @@ function NewSale({ onSaleSuccess, onNavigate }) {
 
   // Calculations Preview
   const subtotal = cartItems.reduce((sum, item) => sum + (item.totalPrice || 0), 0);
-  const discountAmount = Math.max(0, parseFloat(discount) || 0);
+  const discountPercentClamped = Math.min(100, Math.max(0, parseFloat(discountPercent) || 0));
+  const discountAmount = (subtotal * discountPercentClamped) / 100;
   const estimatedTotal = Math.max(0, subtotal - discountAmount);
 
   // Submit Sale to Backend
@@ -162,8 +163,9 @@ function NewSale({ onSaleSuccess, onNavigate }) {
       return;
     }
 
-    if (discountAmount > subtotal) {
-      setErrorMessage(`Discount (₹${discountAmount}) cannot exceed subtotal (₹${subtotal}).`);
+    const discountPercentValue = parseFloat(discountPercent) || 0;
+    if (discountPercentValue < 0 || discountPercentValue > 100) {
+      setErrorMessage('Discount percentage must be between 0% and 100%.');
       return;
     }
 
@@ -173,7 +175,7 @@ function NewSale({ onSaleSuccess, onNavigate }) {
       customerName: customerName.trim(),
       customerPhone: customerPhone.trim() || null,
       paymentMethod: paymentMethod,
-      discount: discountAmount,
+      discount: discountPercentValue,
       items: cartItems.map((item) => ({
         productId: item.productId,
         quantity: item.quantity
@@ -437,17 +439,18 @@ function NewSale({ onSaleSuccess, onNavigate }) {
                 </div>
 
                 <div className="col-6">
-                  <label className="form-label small fw-semibold text-secondary">Discount (₹)</label>
+                  <label className="form-label small fw-semibold text-secondary">Discount (%)</label>
                   <div className="input-group">
-                    <span className="input-group-text">₹</span>
+                    <span className="input-group-text">%</span>
                     <input
                       type="number"
                       step="0.01"
                       min="0"
+                      max="100"
                       className="form-control"
-                      placeholder="0.00"
-                      value={discount}
-                      onChange={(e) => setDiscount(e.target.value)}
+                      placeholder="0"
+                      value={discountPercent}
+                      onChange={(e) => setDiscountPercent(e.target.value)}
                     />
                   </div>
                 </div>
@@ -460,7 +463,7 @@ function NewSale({ onSaleSuccess, onNavigate }) {
                   <span className="fw-semibold text-dark">{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="d-flex justify-content-between text-danger mb-2">
-                  <span>Discount:</span>
+                  <span>Discount ({discountPercentClamped}%):</span>
                   <span className="fw-semibold">- {formatCurrency(discountAmount)}</span>
                 </div>
                 <hr className="my-2" />
